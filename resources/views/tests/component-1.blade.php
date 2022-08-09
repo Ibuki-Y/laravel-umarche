@@ -3,4 +3,5 @@
   test1
 
   <x-tests.card title="Title" content="Content" :message="$message" />
+  <x-tests.card title="Title" />
 </x-tests.app>
