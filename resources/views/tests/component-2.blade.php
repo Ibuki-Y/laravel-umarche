@@ -2,5 +2,7 @@
   <x-slot name="header">Header</x-slot>
   test2
 
-  <x-tests.card title="Title" content="Content" :message="$message" />
+  <x-test-class-base classBaseMessage="class base message" />
+  <div class="mb-4"></div>
+  <x-test-class-base classBaseMessage="class base message" defaultMessage="edit default message" />
 </x-tests.app>
