@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 class ComponentTestController extends Controller {
     public function showComponent1() {
-        return view('tests.component-1');
+        $message = 'message';
+
+        return view('tests.component-1', compact('message'));
     }
 
     public function showComponent2() {
