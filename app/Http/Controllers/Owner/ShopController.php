@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use InterventionImage;
 
 class ShopController extends Controller {
     /**
@@ -51,6 +53,9 @@ class ShopController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
+        $shop = Shop::findOrFail($id);
+
+        return view('owner.shops.edit', compact('shop'));
     }
 
     /**
@@ -61,5 +66,17 @@ class ShopController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+        $imageFile = $request->image;
+        if (!is_null($imageFile) && $imageFile->isValid()) {
+            // Storage::putFile('public/shops', $imageFile);
+            
+            $fileName = uniqid(rand() . '_');
+            $extension = $imageFile->extension();
+            $fileNameStore = $fileName . '.' . $extension;
+            $resizedImage = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
+            Storage::put('public/shops/' . $fileNameStore, $resizedImage);
+        }
+
+        return redirect()->route('owner.shops.index');
     }
 }
