@@ -136,7 +136,7 @@ class OwnersController extends Controller {
         return redirect()
             ->route('admin.owners.index')
             ->with([
-                'message' => 'オーナを更新しました!',
+                'message' => 'オーナ情報を更新しました!',
                 'status' => 'info',
             ]);
     }
