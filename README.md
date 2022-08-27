@@ -63,6 +63,16 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+## Setup
+
+画像のダミーデータは public/images フォルダ内に
+sample1.jpg - sample2.jpg として保存しています．
+
+php artisan storage:link で storage フォルダにリンク後，
+
+storage/app/public/products フォルダ内に保存されています．
+(products フォルダがない場合は作成してください．)
+
 ## Command
 
 `php artisan config:clear`
