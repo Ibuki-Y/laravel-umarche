@@ -9,6 +9,9 @@ use App\Models\PrimaryCategory;
 class SecondaryCategory extends Model {
     use HasFactory;
 
+    /**
+     * For PrimaryCategory relation.
+     */
     public function primary() {
         return $this->belongsTo(PrimaryCategory::class);
     }
