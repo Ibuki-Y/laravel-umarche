@@ -41,10 +41,31 @@ class Product extends Model {
     }
 
     /**
-     * For Image relation.
+     * For Image1 relation.
      */
     public function imageFirst() {
         return $this->belongsTo(Image::class, 'image1', 'id');
+    }
+
+    /**
+     * For Image2 relation.
+     */
+    public function imageSecond() {
+        return $this->belongsTo(Image::class, 'image2', 'id');
+    }
+
+    /**
+     * For Image3 relation.
+     */
+    public function imageThird() {
+        return $this->belongsTo(Image::class, 'image3', 'id');
+    }
+
+    /**
+     * For Image4 relation.
+     */
+    public function imageFourth() {
+        return $this->belongsTo(Image::class, 'image4', 'id');
     }
 
     /**
