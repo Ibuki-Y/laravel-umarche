@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Shop;
 use App\Models\Owner; // Eloquent
-// use Illuminate\Support\Facades\DB; // QueryBuilder
+use Illuminate\Support\Facades\DB; // QueryBuilder
 // use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 
 class OwnersController extends Controller {
@@ -60,11 +62,26 @@ class OwnersController extends Controller {
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        Owner::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $owner = Owner::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]);
+
+                Shop::create([
+                    'owner_id' => $owner->id,
+                    'name' => 'name',
+                    'information' => '',
+                    'filename' => '',
+                    'is_selling' => true,
+                ]);
+            }, 2);
+        } catch (\Throwable $e) {
+            Log::error($e);
+            throw $e;
+        }
 
         return redirect()
             ->route('admin.owners.index')
@@ -119,7 +136,7 @@ class OwnersController extends Controller {
         return redirect()
             ->route('admin.owners.index')
             ->with([
-                'message' => 'オーナを更新しました!',
+                'message' => 'オーナ情報を更新しました!',
                 'status' => 'info',
             ]);
     }
@@ -146,9 +163,9 @@ class OwnersController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function expiredOwnerIndex(){
+    public function expiredOwnerIndex() {
         /* 論理削除したownerを全て取得 */
-        $expiredOwners=Owner::onlyTrashed()->get();
+        $expiredOwners = Owner::onlyTrashed()->get();
 
         return view('admin.expired-owners', compact('expiredOwners'));
     }
@@ -159,7 +176,7 @@ class OwnersController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function expiredOwnerDestroy($id){
+    public function expiredOwnerDestroy($id) {
         /* 物理削除 */
         Owner::onlyTrashed()->findOrFail($id)->forceDelete();
 
