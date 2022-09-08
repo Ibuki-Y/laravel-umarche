@@ -121,6 +121,14 @@
               </div>
             </div>
           </form>
+          <form id="delete_{{ $product->id }}" method="post" action="{{ route('owner.products.destroy', ['product' => $product->id]) }}">
+            @csrf
+            @method('DELETE')
+            <div class="p-2 w-full flex justify-around mt-32">
+              <a href="#" data-id="{{ $product->id }}" onclick="deletePost(this)"
+                class="text-white bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-300 rounded text-center">削除</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -142,5 +150,12 @@
         MicroModal.close(modal);
       });
     });
+
+    function deletePost(e) {
+      'use strict';
+      if (confirm('削除してもいいですか?')) {
+        document.getElementById('delete_' + e.dataset.id).submit();
+      }
+    }
   </script>
 </x-app-layout>
