@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('auth:users');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,5 +52,17 @@ class ItemController extends Controller {
             ->get();
 
         return view('user.index', compact('products'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id) {
+        $product = Product::findOrFail($id);
+
+        return view('user.show', compact('product'));
     }
 }
