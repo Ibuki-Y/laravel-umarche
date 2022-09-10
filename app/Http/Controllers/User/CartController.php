@@ -50,4 +50,18 @@ class CartController extends Controller {
 
         return redirect()->route('user.cart.index');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id) {
+        Cart::where('product_id', $id)
+            ->where('user_id', Auth::id())
+            ->delete();
+
+        return redirect()->route('user.cart.index');
+    }
 }
