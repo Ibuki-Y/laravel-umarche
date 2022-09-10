@@ -73,6 +73,10 @@ sample1.jpg - sample2.jpg として保存しています．
 storage/app/public/products フォルダ内に保存されています．
 (products フォルダがない場合は作成してください．)
 
+ショップの画像を表示する場合は
+storage/app/public/shopsフォルダを作成し
+画像を保存してください．
+
 ## Command
 
 `php artisan config:clear`
