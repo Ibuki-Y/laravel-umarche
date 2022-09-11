@@ -85,10 +85,14 @@ class CartController extends Controller {
                 return redirect()->route('user.cart.index');
             } else {
                 $lineItem = [
-                    'name' => $product->name,
-                    'description' => $product->information,
-                    'amount' => $product->price,
-                    'currency' => 'jpy',
+                    // 'description' => $product->information,
+                    'price_data' => [
+                        'currency' => 'JPY',
+                        'product_data' => [
+                            'name' => $product->name,
+                        ],
+                        'unit_amount' => $product->price,
+                    ],
                     'quantity' => $product->pivot->quantity,
                 ];
                 array_push($lineItems, $lineItem);
@@ -102,10 +106,10 @@ class CartController extends Controller {
                 'quantity' => $product->pivot->quantity * -1,
             ]);
         }
-        dd('passed');
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
-        $session = \Stirpe\Checkout\Session::create([
+        // \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+        $session = $stripe->checkout->sessions->create([
             'payment_method_types' => ['card'],
             'line_items' => [$lineItems],
             'mode' => 'payment',

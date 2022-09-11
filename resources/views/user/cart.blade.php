@@ -40,6 +40,14 @@
                 </div>
               </div>
             @endforeach
+            <div class="my-2">
+              合計: {{ number_format($totalPrice) }}
+              <span class="text-sm text-gray-700">円(税込)</span>
+            </div>
+            <div>
+              <button onclick="location.href='{{ route('user.cart.checkout') }}'"
+                class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">購入</button>
+            </div>
           @else
             <div class="bg-blue-500 w-1/2 mx-auto mb-4 p-2 rounded text-white text-center">
               カートに商品が入っていません!
