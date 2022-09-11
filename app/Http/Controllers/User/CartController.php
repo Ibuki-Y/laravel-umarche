@@ -53,7 +53,7 @@ class CartController extends Controller {
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -67,7 +67,7 @@ class CartController extends Controller {
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Checkout the specified resource from storage.
      *
      * @return \Illuminate\Http\Response
      */
@@ -113,11 +113,22 @@ class CartController extends Controller {
             'payment_method_types' => ['card'],
             'line_items' => [$lineItems],
             'mode' => 'payment',
-            'success_url' => route('user.items.index'),
+            'success_url' => route('user.cart.success'),
             'cancel_url' => route('user.cart.index'),
         ]);
         $publicKey = env('STRIPE_PUBLIC_KEY');
 
         return view('user.checkout', compact('session', 'publicKey'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function success() {
+        Cart::where('user_id', Auth::id())->delete();
+
+        return redirect()->route('user.items.index');
     }
 }
