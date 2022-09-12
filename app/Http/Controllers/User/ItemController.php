@@ -42,6 +42,7 @@ class ItemController extends Controller {
     public function index(Request $request) {
         $products = Product::availableItems()
             ->selectCategory($request->category ?? '0')
+            ->searchKeyword($request->keyword)
             ->sortOrder($request->sort)
             ->paginate($request->pagination ?? '20');
 

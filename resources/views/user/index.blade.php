@@ -20,7 +20,8 @@
           </select>
           <div class="flex space-x-2 items-center">
             <div>
-              <input name="keyword" placeholder="キーワードを入力" type="text" class="border border-gray-500" py-2>
+              {{-- reload value --}}
+              <input name="keyword" placeholder="キーワードを入力" type="text" class="border border-gray-500 py-2">
             </div>
             <div>
               <button class="whitespace-nowrap ml-auto text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">検索</button>
