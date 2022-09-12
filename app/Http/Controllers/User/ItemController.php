@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Stock;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller {
@@ -35,10 +35,13 @@ class ItemController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $products = Product::availableItems()->get();
+    public function index(Request $request) {
+        $products = Product::availableItems()
+            ->sortOrder($request->sort)
+            ->get();
 
         return view('user.index', compact('products'));
     }
