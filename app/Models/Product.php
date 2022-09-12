@@ -9,7 +9,7 @@ use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+// use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model {
@@ -62,20 +62,16 @@ class Product extends Model {
             ->withPivot(['id', 'quantity']);
     }
 
-    /**
-     * Apply the scope to a given Eloquent query builder.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return void
-     */
-    public function scopeAvailableItems(Builder $builder) {
+    public function scopeAvailableItems($query) {
         $stocks = DB::table('t_stocks')
-            ->select('product_id', DB::raw('sum(quantity) as quantity'))
+            ->select(
+                'product_id',
+                DB::raw('sum(quantity) as quantity')
+            )
             ->groupBy('product_id')
             ->having('quantity', '>', 1);
 
-        return $builder
+        return $query
             ->joinSub($stocks, 'stock', function ($join) {
                 $join->on('products.id', '=', 'stock.product_id');
             })
