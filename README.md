@@ -65,6 +65,16 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Setup
 
+`composer install`
+
+`npm install`
+
+`npm run dev`
+
+`php artisan key:generate`
+
+.env ファイルを編集してください．
+
 画像のダミーデータは public/images フォルダ内に
 sample1.jpg - sample2.jpg として保存しています．
 
@@ -72,6 +82,10 @@ sample1.jpg - sample2.jpg として保存しています．
 
 storage/app/public/products フォルダ内に保存されています．
 (products フォルダがない場合は作成してください．)
+
+ショップの画像を表示する場合は
+storage/app/public/shops フォルダを作成し
+画像を保存してください．
 
 ## Command
 
