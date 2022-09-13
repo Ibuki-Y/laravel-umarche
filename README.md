@@ -87,6 +87,10 @@ storage/app/public/products フォルダ内に保存されています．
 storage/app/public/shops フォルダを作成し
 画像を保存してください．
 
+Stripe
+
+Mailtrap: `php artisan queue:work`
+
 ## Command
 
 `php artisan config:clear`
@@ -94,3 +98,5 @@ storage/app/public/shops フォルダを作成し
 `php artisan cache:clear`
 
 `php artisan view:clear`
+
+`php artisan config:cache`
