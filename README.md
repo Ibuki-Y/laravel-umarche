@@ -94,3 +94,5 @@ storage/app/public/shops フォルダを作成し
 `php artisan cache:clear`
 
 `php artisan view:clear`
+
+`php artisan config:cache`
